@@ -2,9 +2,9 @@ Intro
 =====
 
 **secret-santa** can help you manage a list of secret santa participants by
-randomly assigning pairings and sending emails. It can avoid pairing 
-couples to their significant other, and allows custom email messages to be 
-specified.
+randomly assigning pairings and then sending emails or creating text files. 
+It can avoid pairing couples to their significant other, and allows custom 
+messages to be specified.
 
 Dependencies
 ------------
@@ -87,3 +87,7 @@ participants.
 To send the emails, call using the `--send` argument
 
     python secret_santa.py --send
+    
+To create a folder with text files, call using the `--txt` argument
+
+    python secret_santa.py --txt
