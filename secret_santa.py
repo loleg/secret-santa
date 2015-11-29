@@ -168,7 +168,8 @@ def main(argv=None):
                 
         if not (send or txt):
             print( """Test pairings:\n\n%s\n\nTo send out emails with new pairings,
-call with the --send argument:\n\n$ python secret_santa.py --send""" % ("\n".join([str(p) for p in pairs])))
+call with the --send argument:\n\t$ python secret_santa.py --send\n
+To generate txt files to distribute manually call with the --text argument:\n\t$ python secret_santa.py --txt""" % ("\n".join([str(p) for p in pairs])))
         
         if send:
             server = smtplib.SMTP(config['SMTP_SERVER'], config['SMTP_PORT'])
