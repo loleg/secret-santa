@@ -63,7 +63,7 @@ class Pair:
         return "%s ---> %s" % (self.giver.name, self.receiver.name)
 
 def parse_yaml(yaml_path=CONFIG_PATH):
-    return yaml.load(open(yaml_path))    
+    return yaml.load(open(yaml_path, encoding='utf-8'))    
 
 def choose_receiver(giver, receivers):
     choice = random.choice(receivers)
@@ -99,7 +99,7 @@ def main(argv=None):
     try:
         try:
             opts, args = getopt.getopt(argv[1:], "shc", ["send", "txt", "help"])
-        except getopt.error, msg:
+        except getopt.error as msg:
             raise Usage(msg)
     
         # option processing
@@ -159,30 +159,16 @@ def main(argv=None):
                 try:
                     if os.path.isfile(file_path):
                         os.unlink(file_path)
-                except Exception, e:
-                    print e
+                except Exception as e:
+                    print (e)
             for pair in pairs:
                 f = open("pairs/Santee of " + pair.giver.name + '.txt','w')
                 f.write(config['MESSAGE'].format(santa=pair.giver.name, santee=pair.receiver.name))
                 f.close()
                 
         if not (send or txt):
-            print """
-Test pairings:
-                
-%s
-                
-To send out emails with new pairings,
-call with the --send argument:
-
-    $ python secret_santa.py --send
-
-To generate txt files to distribute manually,
-call with the --txt argument:
-
-    $ python secret_santa.py --txt
-            
-            """ % ("\n".join([str(p) for p in pairs]))
+            print( """Test pairings:\n\n%s\n\nTo send out emails with new pairings,
+call with the --send argument:\n\n$ python secret_santa.py --send""" % ("\n".join([str(p) for p in pairs])))
         
         if send:
             server = smtplib.SMTP(config['SMTP_SERVER'], config['SMTP_PORT'])
@@ -206,13 +192,13 @@ call with the --txt argument:
                 santee=pair.receiver.name,
             )
             if send:
-                result = server.sendmail(frm, [to], body)
-                print "Emailed %s <%s>" % (pair.giver.name, to)
+                result = server.sendmail(frm, [to], body.encode('UTF-8'))
+                print("Emailed %s <%s>" % (pair.giver.name, to))
 
         if send:
             server.quit()
         
-    except Usage, err:
+    except Usage as err:
         print >> sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg)
         print >> sys.stderr, "\t for help use --help"
         return 2
@@ -220,3 +206,4 @@ call with the --txt argument:
 
 if __name__ == "__main__":
     sys.exit(main())
+
