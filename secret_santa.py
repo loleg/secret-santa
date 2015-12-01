@@ -200,8 +200,8 @@ To generate txt files to distribute manually call with the --text argument:\n\t$
             server.quit()
         
     except Usage as err:
-        print >> sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg)
-        print >> sys.stderr, "\t for help use --help"
+        print( sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg))
+        print( sys.stderr, "\t for help use --help")
         return 2
 
 
