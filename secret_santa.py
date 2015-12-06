@@ -170,7 +170,7 @@ def main(argv=None):
         if not (send or txt):
             print( """Test pairings:\n\n%s\n\nTo send out emails with new pairings,
 call with the --send argument:\n\t$ python secret_santa.py --send\n
-To generate txt files to distribute manually call with the --text argument:\n\t$ python secret_santa.py --txt""" % ("\n".join([str(p) for p in pairs])))
+To generate txt files to distribute manually call with the --text argument:\n\t$ python secret_santa.py --txt\n""" % ("\n".join([str(p) for p in pairs])))
 
         if send:
             print( "Initialising SMTP connection" )
@@ -181,7 +181,7 @@ To generate txt files to distribute manually call with the --text argument:\n\t$
             print( "Logging in as <%s> to send mail" % config['USERNAME'] )
             server.login(config['USERNAME'], config['PASSWORD'])
         for idx, pair in enumerate(pairs):
-            print( "Sending pair %d of %d" % (idx, len(pairs)) )
+            print( "Processing pair %d of %d" % (idx + 1, len(pairs)) )
             zone = pytz.timezone(config['TIMEZONE'])
             now = zone.localize(datetime.datetime.now())
             date = now.strftime('%a, %d %b %Y %T %Z') # Sun, 21 Dec 2008 06:25:23 +0000
